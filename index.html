@@ -97,7 +97,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>前言：今天我搭建了自己的第一个个人博客网站。本来我只是想用它来堆放自己的文章的，但是文章的编写都是使用的Markdown格式，这和我原来想象的可以用纯文本格式编辑有点不一样，不过好在Typora用来写小说体验也不错（就是格式转换比较麻烦，我一般在Typora上写完了再剪切到Word上排版）。既然文章可以写Markdown格式，我就顺便记录一些平时自己折腾电脑的过程写成博客，虽然没有什么技术含量（并且我以后也不打算从事IT），但是写出来还是蛮有成就感。于是我就画十分钟大概了解了Markdown语法，详细记录了我搭建网站时踩的坑。</p>
+        <p>前言：今天我搭建了自己的第一个个人博客网站。本来我只是想用它来堆放自己的文章的，但是文章的编写都是使用的Markdown格式，这和我原来想象的可以用纯文本格式编辑有点不一样，不过好在Typora用来写小说体验也不错（就是格式转换比较麻烦，我一般在Typora上写完了再剪切到Word上排版）。既然文章可以写Markdown格式，我就顺便记录一些平时自己折腾电脑的过程写成博客，虽然没有什么技术含量（并且我以后也不打算从事IT），但是写出来还是蛮有成就感。于是我就花十分钟大概了解了Markdown语法，详细记录了我搭建网站时踩的坑。</p>
 <h2 id="了解Hexo"><a href="#了解Hexo" class="headerlink" title="了解Hexo"></a>了解Hexo</h2><p>这里引用一下Hexo官网的原话：</p>
 <blockquote>
 <p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
@@ -124,12 +124,24 @@
 <blockquote>
 <p>NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：<br> 允许用户从NPM服务器下载别人编写的第三方包到本地使用。<br> 允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。<br> 允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。<br>由于新版的nodejs已经集成了npm，所以之前npm也一并安装好了。同样可以通过输入 “npm -v” 来测试是否成功安装。</p>
 </blockquote>
-<p>然后我翻看了Hexo的官方文档。</p>
+<h4 id="Hexo的安装"><a href="#Hexo的安装" class="headerlink" title="Hexo的安装"></a>Hexo的安装</h4><p>我翻看了Hexo的官方文档。</p>
 <blockquote>
 <p>可以使用下面这条指令来安装Hexo<br><code>npm install -g hexo-cli</code><br>对于熟悉 npm 的进阶用户，可以仅局部安装 hexo 包。<br><code> npm install hexo</code><br>安装以后，可以使用以下两种方式执行 Hexo：<br>1.<code>npx hexo &lt;command&gt;</code><br>2.将 Hexo 所在的目录下的<code> node_modules</code> 添加到环境变量之中即可直接使用<code> hexo &lt;command&gt;</code>：<br><code>echo &#39;PATH=&quot;$PATH:./node_modules/.bin&quot;&#39; &gt;&gt; ~/.profile</code></p>
 </blockquote>
 <p>执行Hexo的意思大概是和上面那篇知乎文章是一个意思，但是执行Hexo的时候直接在Bash中输入<code>hexo &lt;command&gt;</code>就可以了。</p>
-<h2 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h2><p>做多几次后我发现建站和建仓库，生成SSH没有前后之分我就</p>
+<h2 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h2><p>做多几次后我发现建站和建仓库，生成SSH没有前后之分，我就按照官方文档的顺序来写了。首先我们需要一个文件来储存博客网站所需要的文件。可以在你准备建立的文件夹的根目录空白地区单击右键再Git Bash Here，依次执行<br><code>$ hexo init &lt;folder&gt;</code><br><code>$ cd &lt;folder&gt;</code><br><code>$ npm install</code><br>命令（<Folder>是你建立的文件夹的名字），就会在该目录下生成一个文件夹。或者你自己新建一个文件夹，然后右键单击文件夹再Bash，执行<br><code>$ hexo init</code><br><code>$ npm install</code><br>就不用建立文件夹后再Cd到那个文件夹下面去。</p>
+<p>在文件夹中有几个需要注意的文件：<br> <code>_config.yml</code>(网站的配置信息,参数含义可参考<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/configuration">官方文档</a>)<br> <code> source</code>（存放用户资源的地方，一般是文章的Md格式）<br> <code>themes</code>（主题文件夹，更改主题会用到）</p>
+<h4 id="需要注意的是"><a href="#需要注意的是" class="headerlink" title="需要注意的是"></a>需要注意的是</h4><p>文件夹创建好了之后，配置文件中的Deployment的参数只有<code>type</code>，需要改为：</p>
+<p><code>type: git   repository: https://github.com/Username/Username.github.io.git   branch: main</code></p>
+<p>（网上的教程大多数都是Master，但是Hexo更新快，已经变成了Main，这是个大坑。并且每个参数的冒号与参数值之间有一个空格,Isername是Github账号的用户名）</p>
+<h2 id="创建Github的仓库"><a href="#创建Github的仓库" class="headerlink" title="创建Github的仓库"></a>创建Github的仓库</h2><p>没啥好说，多上网冲冲浪吧，这玩意也不需要挂梯子。需要注意，仓库名字的格式必须是Username.Github.io，这样当你在地址栏中输入你的网站的网址（就是这个Username.Github.io）才会被搜索到。</p>
+<p>其他的，我们生成的网页是托管在Github上的，起到服务器作用的是Github Pages。</p>
+<h2 id="将网站部署到Github上去"><a href="#将网站部署到Github上去" class="headerlink" title="将网站部署到Github上去"></a>将网站部署到Github上去</h2><p>参考<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/103391101">这篇文章</a>（其实就是我懒得写了）。</p>
+<p>（有些<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/44213627">文章</a>是用<code>git config --global user.name &quot;yourname&quot;</code>和<code>git config --global user.email &quot;youremail&quot;</code>登陆一下Github,再用RSA算法生成一下公钥和密钥（<code>ssh-keygen -t rsa -C &quot;youremail&quot;</code>），不知道有什么区别）</p>
+<p>然后在本地建立一个Git仓库，写好博客再Push到Github上的远程仓库，一个博客网站就建好了。在建好之后通常得等待20分钟才能够通过网址Username.gtihub.io来访问。至此基本操作就结束了。</p>
+<p>（这也太潦草了啊喂！）</p>
+<h2 id="常用Hexo命令"><a href="#常用Hexo命令" class="headerlink" title="常用Hexo命令"></a>常用Hexo命令</h2><p><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/commands">文档</a></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>昨天还能部署，今天部署就出了一点问题。查了一下资料，出现<code>Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html</code>的原因可能是找不到Git分支。查看当前文件夹没有Git文件，使用<code>git init</code> 生成Git文件，然后使用<code>hexo deploy</code>上传即可。目前部署没有问题，除了网站访问稍微有些慢（我挂了梯子的）。</p>
 
       
     </div>
